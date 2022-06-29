@@ -44,7 +44,7 @@ app.post("/" , async (req, res) =>{
         const compararSenhas = bcypt.compareSync(user.senha, acharUser.senha)
         if (!acharUser || !compararSenhas) {
             console.log(acharUser.senha)
-            return res.status(400).send("email ou senha incorretos")
+            return res.status(401).send("email ou senha incorretos")
         }else{
            const token = uuid();
            await db.collection("sessions").insertOne({
@@ -70,12 +70,12 @@ app.post("/cadastrar" , async (req , res)=>{
     });
     const { error } = cadastroSchema.validate({nome , email , senha , url})
     if(error){
-        return res.status(400).send("sorry")
+        return res.status(400).send("reveja os campos preenchidos")
     }
     try{
         const verificaEmail = await db.collection("users").findOne({email})
         if(verificaEmail){
-            return res.status(400).send("tente outro email")
+            return res.status(400).send("email ou senha incorretos")
         }
         const criptografarSenha = bcypt.hashSync(senha , 10)
         await db.collection('users').insertOne({ nome , email , senha: criptografarSenha , url }) 
