@@ -77,8 +77,8 @@ app.post("/cadastrar" , async (req , res)=>{
         if(verificaEmail){
             return res.status(400).send("tente outro email")
         }
-        const criptograarSenha = bcypt.hashSync(senha , 10)
-        await db.collection('users').insertOne({ nome , email , senha: criptograarSenha , url }) 
+        const criptografarSenha = bcypt.hashSync(senha , 10)
+        await db.collection('users').insertOne({ nome , email , senha: criptografarSenha , url }) 
         res.status(201).send("CREATED")
     }catch(e){
         console.log(e)
