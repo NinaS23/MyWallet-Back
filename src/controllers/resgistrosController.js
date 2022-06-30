@@ -101,12 +101,11 @@ export async function enviarSaida(req, res) {
        return res.status(401).send("não autorizado")
    }
 
-    const usuario = await db.collections("sessions").findOne({ 
-        userId: session.userId 
+    const usuario = await db.collection("sessions").findOne({ 
+        userId: sessao.userId 
        })
    
    if(usuario){
-
        res.status(201).send("uhull")
    }else{
        return res.status(401).send("não encontrei")

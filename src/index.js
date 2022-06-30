@@ -20,7 +20,7 @@ app.post("/entrada" , enviarEntrada)
 
 app.post("/saida" , enviarSaida)
 
-app.get("resgistro" , pegarResgistros)
+app.get("/resgistro" , pegarResgistros)
 
 const PORT = process.env.PORT || 5006
 
