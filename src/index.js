@@ -12,13 +12,15 @@ app.use(json())
 app.use(cors())
 
 
-app.post("/" , logarUser )
+app.post("/" , logarUser)
 
-app.post("/cadastrar" , cadastrarUser )
+app.post("/cadastrar" , cadastrarUser)
 
 app.post("/entrada" , enviarEntrada)
 
 app.post("/saida" , enviarSaida)
+
+app.get("resgistro" , pegarResgistros)
 
 const PORT = process.env.PORT || 5006
 
