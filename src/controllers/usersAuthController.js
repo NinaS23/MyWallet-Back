@@ -45,7 +45,7 @@ export async function logarUser(req, res) {
                userId: acharUser._id,
                token
            })
-           return res.send(token)
+           return res.send({ token })
         }
     }catch(e){
         console.log(e)
