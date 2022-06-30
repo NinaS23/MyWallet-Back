@@ -3,7 +3,7 @@ import express, { json } from "express";
 import cors from "cors"
 import dotenv from "dotenv"
 import { logarUser  , cadastrarUser  } from "./controllers/usersAuthController.js"
-import { enviarEntrada } from "./controllers/resgistrosController.js"
+import { enviarEntrada , enviarSaida } from "./controllers/resgistrosController.js"
 
 dotenv.config()
 
@@ -17,6 +17,8 @@ app.post("/" , logarUser )
 app.post("/cadastrar" , cadastrarUser )
 
 app.post("/entrada" , enviarEntrada)
+
+app.post("/saida" , enviarSaida)
 
 const PORT = process.env.PORT || 5006
 
