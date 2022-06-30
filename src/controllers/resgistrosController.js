@@ -46,7 +46,7 @@ export async function enviarEntrada(req, res) {
     let mes = String(data.getMonth() + 1).padStart(2, '0');
     let dataAtual = dia + '/' + mes;
 
-    await db.collection("entrada").insertOne({ valor, desciption, data: dataAtual })
+    await db.collection("registros").insertOne({ valor, desciption, data: dataAtual , type:"entrada" })
     res.status(201).send("created")
 
 }
@@ -79,7 +79,7 @@ export async function enviarSaida(req, res) {
         let mes = String(data.getMonth() + 1).padStart(2, '0');
         let dataAtual = dia + '/' + mes;
 
-        await db.collection("saida").insertOne({ valor, desciption, data: dataAtual })
+        await db.collection("registros").insertOne({ valor, desciption, data: dataAtual , type:"saida"})
         res.status(201).send("created")
     } catch (e) {
         console.log(e)
@@ -106,7 +106,8 @@ export async function enviarSaida(req, res) {
        })
    
    if(usuario){
-       res.status(201).send("uhull")
+       const registros = await db.collection("registros").find().toArray()
+       res.status(201).send(registros)
    }else{
        return res.status(401).send("não encontrei")
    }
