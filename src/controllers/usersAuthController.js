@@ -1,6 +1,3 @@
-
-import express, { json } from "express";
-import cors from "cors"
 import dotenv from "dotenv"
 import { MongoClient, ObjectId } from "mongodb";
 import joi from "joi";
@@ -10,9 +7,6 @@ import { v4 as uuid } from "uuid"
 
 dotenv.config()
 
-const app = express()
-app.use(json())
-app.use(cors())
 
 let db;
 const mongoClient = new MongoClient(process.env.BANCO_URL);
@@ -25,7 +19,7 @@ promise.then(() => {
 promise.catch(res => console.log(chalk.red("deu xabu"), res))
 
 
-app.post("/" , async (req, res) =>{
+export async function logarUser(req, res) {
   
     const user = req.body   
 
@@ -56,9 +50,10 @@ app.post("/" , async (req, res) =>{
     }catch(e){
         console.log(e)
     }
-})
+}
 
-app.post("/cadastrar" , async (req , res)=>{
+
+ export async function cadastrarUser(req , res) {
 
     const { nome , email , senha , senha2} = req.body
 
@@ -66,7 +61,7 @@ app.post("/cadastrar" , async (req , res)=>{
         nome:joi.string().required(),
         email:joi.string().email().required() ,
         senha: joi.string().min(4).required(),
-        senha2:joi.string().required()//usar regex pra validar a url
+        senha2:joi.string().required()
     });
     const { error } = cadastroSchema.validate({nome , email , senha , senha2})
     if(error){
@@ -87,10 +82,4 @@ app.post("/cadastrar" , async (req , res)=>{
         console.log(e)
     }
 
-})
-
-const PORT = process.env.PORT || 5006
-
-app.listen(PORT , () =>{
-    console.log(`conectado na porta ${PORT}`)
-})
+}
