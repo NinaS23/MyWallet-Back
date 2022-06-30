@@ -60,15 +60,15 @@ app.post("/" , async (req, res) =>{
 
 app.post("/cadastrar" , async (req , res)=>{
 
-    const { nome , email , senha , url} = req.body
+    const { nome , email , senha , senha2} = req.body
 
     const cadastroSchema = joi.object({
         nome:joi.string().required(),
         email:joi.string().email().required() ,
         senha: joi.string().min(4).required(),
-        url:joi.string().required()//usar regex pra validar a url
+        senha2:joi.string().required()//usar regex pra validar a url
     });
-    const { error } = cadastroSchema.validate({nome , email , senha , url})
+    const { error } = cadastroSchema.validate({nome , email , senha , senha2})
     if(error){
         return res.status(400).send("reveja os campos preenchidos")
     }
@@ -77,8 +77,11 @@ app.post("/cadastrar" , async (req , res)=>{
         if(verificaEmail){
             return res.status(400).send("email ou senha incorretos")
         }
+        if(senha !== senha2){
+            return res.status(400).send("reveja a senha pfv")
+        }
         const criptografarSenha = bcypt.hashSync(senha , 10)
-        await db.collection('users').insertOne({ nome , email , senha: criptografarSenha , url }) 
+        await db.collection('users').insertOne({ nome , email , senha: criptografarSenha , senha2: criptografarSenha }) 
         res.status(201).send("CREATED")
     }catch(e){
         console.log(e)
