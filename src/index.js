@@ -15,8 +15,8 @@ app.use(json())
 app.use(cors())
 
 
-app.use(validarToken ,usuarioAuth)
-app.use(registroRouter)
+app.use(usuarioAuth)
+app.use(validarToken ,registroRouter)
 
 
 
