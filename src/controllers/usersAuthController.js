@@ -22,8 +22,9 @@ console.log(user.senha)
     try{
 
         const acharUser = await db.collection("users").findOne({ email: user.email })
-        console.log(acharUser)
-        console.log(acharUser.senha)
+        console.log(acharUser.nome)
+        
+        
         let compararSenhas =  bcypt.compareSync(user.senha, acharUser.senha)
         if (!acharUser || !compararSenhas) {
             console.log(acharUser.senha)
@@ -33,8 +34,10 @@ console.log(user.senha)
            await db.collection("sessions").insertOne({
                userId: acharUser._id,
                token
+               
            })
-           return res.send({ token })
+           const nome = acharUser.nome
+           return res.send({ token , nome})
         }
     }catch(e){
         console.log(e)
