@@ -1,22 +1,11 @@
-import dotenv from "dotenv"
-import { MongoClient, ObjectId } from "mongodb";
+import { db  } from "../mongodb.js"
 import joi from "joi";
-import bcypt from "bcrypt"
-import { v4 as uuid } from "uuid"
 
 
-dotenv.config()
 
 
-let db;
-const mongoClient = new MongoClient(process.env.BANCO_URL);
-const promise = mongoClient.connect();
 
-promise.then(() => {
-    db = mongoClient.db(process.env.BANCO_NAME);
-    console.log(`conectou ao banco do  ${process.env.BANCO_NAME}`);
-})
-promise.catch(res => console.log(chalk.red("deu xabu"), res))
+
 
 
 export async function enviarEntrada(req, res) {

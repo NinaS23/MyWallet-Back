@@ -1,22 +1,9 @@
-import dotenv from "dotenv"
-import { MongoClient, ObjectId } from "mongodb";
+
 import joi from "joi";
 import bcypt from "bcrypt"
 import { v4 as uuid } from "uuid" 
+import { db  } from "../mongodb.js"
 
-
-dotenv.config()
-
-
-let db;
-const mongoClient = new MongoClient(process.env.BANCO_URL);
-const promise = mongoClient.connect();
-
-promise.then(() => {
-  db = mongoClient.db(process.env.BANCO_NAME);
-  console.log(`conectou ao banco do  ${process.env.BANCO_NAME}` );
-})
-promise.catch(res => console.log(chalk.red("deu xabu"), res))
 
 
 export async function logarUser(req, res) {
@@ -72,7 +59,7 @@ console.log(user.senha)
     try{
         const verificaEmail = await db.collection("users").findOne({email})
         if(verificaEmail){
-            return res.status(400).send("email ou senha incorretos")
+            return res.status(400).send("email existente")
         }
         if(senha !== senha2){
             return res.status(400).send("reveja a senha pfv")
