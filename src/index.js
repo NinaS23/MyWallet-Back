@@ -2,8 +2,9 @@
 import express, { json } from "express";
 import cors from "cors"
 import dotenv from "dotenv"
-import { logarUser  , cadastrarUser  } from "./controllers/usersAuthController.js"
+import router from "./Routes/usersRouter.js";
 import { enviarEntrada , enviarSaida , pegarResgistros} from "./controllers/resgistrosController.js"
+
 
 dotenv.config()
 
@@ -12,9 +13,7 @@ app.use(json())
 app.use(cors())
 
 
-app.post("/" , logarUser)
-
-app.post("/cadastrar" , cadastrarUser)
+app.use(router)
 
 app.post("/entrada" , enviarEntrada)
 
