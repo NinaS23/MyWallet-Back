@@ -4,19 +4,9 @@ import joi from "joi";
 
 
 export async function enviarEntrada(req, res) {
-    const { valor, desciption } = req.body
-
-
-    const entradaSchema = joi.object({
-        valor: joi.number().min(1).required(),
-        desciption: joi.string().min(1).required()
-    })
-
-    const { error } = entradaSchema.validate({ valor, desciption })
-    if (error) {
-        return res.status(401).send("preencha os dados corretamente")
-    }
-
+ 
+  const valor = res.locals.valor
+  const  desciption = res.locals.desciption 
 
 
     let data = new Date();
@@ -31,20 +21,11 @@ export async function enviarEntrada(req, res) {
 
 
 export async function enviarSaida(req, res) {
-    const { valor, desciption } = req.body
    
-
-    const saidaSchema = joi.object({
-        valor: joi.number().min(1).required(),
-        desciption: joi.string().min(1).required()
-    })
-
-    const { error } = saidaSchema.validate({ valor, desciption })
-    if (error) {
-      
-        return res.status(401).send("preencha os dados corretamente")
-    }
-
+    
+  const valor = res.locals.valor
+  const  desciption = res.locals.desciption 
+  
     try {
 
         let data = new Date();
