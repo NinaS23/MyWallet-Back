@@ -8,7 +8,7 @@ export async function enviarEntrada(req, res) {
   const valor = res.locals.valor
   const  desciption = res.locals.desciption 
 
-
+try{
     let data = new Date();
     let dia = String(data.getDate()).padStart(2, '0');
     let mes = String(data.getMonth() + 1).padStart(2, '0');
@@ -16,6 +16,10 @@ export async function enviarEntrada(req, res) {
 
     await db.collection("registros").insertOne({ valor, desciption, data: dataAtual , type:"entrada" })
     res.status(201).send("created")
+}catch(e){
+    console.log(e)
+}
+
 
 }
 
@@ -25,7 +29,7 @@ export async function enviarSaida(req, res) {
     
   const valor = res.locals.valor
   const  desciption = res.locals.desciption 
-  
+
     try {
 
         let data = new Date();
