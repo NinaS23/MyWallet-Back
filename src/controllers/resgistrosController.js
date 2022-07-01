@@ -3,15 +3,9 @@ import joi from "joi";
 
 
 
-
-
-
-
-
 export async function enviarEntrada(req, res) {
     const { valor, desciption } = req.body
-    const { authorization } = req.headers;
-    const token = authorization?.replace('Bearer ', '');
+
 
     const entradaSchema = joi.object({
         valor: joi.number().min(1).required(),
@@ -24,11 +18,6 @@ export async function enviarEntrada(req, res) {
     }
 
 
-    const session = await db.collection('sessions').findOne({ token });
-
-    if (!session) {
-        return res.sendStatus(401);
-    }
 
     let data = new Date();
     let dia = String(data.getDate()).padStart(2, '0');
@@ -43,8 +32,7 @@ export async function enviarEntrada(req, res) {
 
 export async function enviarSaida(req, res) {
     const { valor, desciption } = req.body
-    const { authorization } = req.headers;
-    const token = authorization?.replace('Bearer ', '');
+   
 
     const saidaSchema = joi.object({
         valor: joi.number().min(1).required(),
@@ -53,16 +41,11 @@ export async function enviarSaida(req, res) {
 
     const { error } = saidaSchema.validate({ valor, desciption })
     if (error) {
-        console.log("ntrei ")
+      
         return res.status(401).send("preencha os dados corretamente")
     }
 
     try {
-        const session = await db.collection('sessions').findOne({ token });
-
-        if (!session) {
-            return res.sendStatus(401);
-        }
 
         let data = new Date();
         let dia = String(data.getDate()).padStart(2, '0');
@@ -79,20 +62,10 @@ export async function enviarSaida(req, res) {
 }
 
  export async function pegarResgistros(req, res){
-    const { authorization } = req.headers;
-    const token = authorization?.replace('Bearer ', '');
+    const session = res.locals.session;
     
-    if(!token){
-        return res.status(401).send("não autorizado")
-    }
-   const sessao =  await db.collection("sessions").findOne({token})
-
-   if(!sessao){
-       return res.status(401).send("não autorizado")
-   }
-
     const usuario = await db.collection("sessions").findOne({ 
-        userId: sessao.userId 
+        userId: session.userId 
        })
    
    if(usuario){
