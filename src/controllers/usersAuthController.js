@@ -27,7 +27,7 @@ export async function logarUser(req, res) {
         email:joi.string().email().required() ,
         senha: joi.string().min(4).required()
     });
-
+console.log(user.senha)
     const { error } = userSchema.validate(user)
     if (error) {
         return res.status(400).send("email ou senha incorretos")
@@ -35,7 +35,9 @@ export async function logarUser(req, res) {
     try{
 
         const acharUser = await db.collection("users").findOne({ email: user.email })
-        const compararSenhas = bcypt.compareSync(user.senha, acharUser.senha)
+        console.log(acharUser)
+        console.log(acharUser.senha)
+        let compararSenhas =  bcypt.compareSync(user.senha, acharUser.senha)
         if (!acharUser || !compararSenhas) {
             console.log(acharUser.senha)
             return res.status(401).send("email ou senha incorretos")

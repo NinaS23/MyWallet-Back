@@ -64,6 +64,7 @@ export async function enviarSaida(req, res) {
 
     const { error } = saidaSchema.validate({ valor, desciption })
     if (error) {
+        console.log("ntrei ")
         return res.status(401).send("preencha os dados corretamente")
     }
 
