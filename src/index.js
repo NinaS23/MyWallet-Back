@@ -2,8 +2,9 @@
 import express, { json } from "express";
 import cors from "cors"
 import dotenv from "dotenv"
-import router from "./Routes/usersRouter.js";
-import { enviarEntrada , enviarSaida , pegarResgistros} from "./controllers/resgistrosController.js"
+import usuarioAuth from "./Routes/usersRouter.js";
+import registroRouter from "./Routes/registrosRoutes.js"
+
 
 
 dotenv.config()
@@ -13,13 +14,10 @@ app.use(json())
 app.use(cors())
 
 
-app.use(router)
+app.use(usuarioAuth)
+app.use(registroRouter)
 
-app.post("/entrada" , enviarEntrada)
 
-app.post("/saida" , enviarSaida)
-
-app.get("/resgistro" , pegarResgistros)
 
 const PORT = process.env.PORT || 5006
 
