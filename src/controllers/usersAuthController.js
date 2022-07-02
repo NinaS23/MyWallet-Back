@@ -7,7 +7,7 @@ import { db  } from "../mongodb.js"
 
 
 export async function logarUser(req, res) {
-  
+  console.log("entrei")
     const user = req.body   
 
     const userSchema = joi.object({
