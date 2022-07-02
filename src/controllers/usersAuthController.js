@@ -26,14 +26,17 @@ console.log(user.senha)
         
         
         let compararSenhas =  bcypt.compareSync(user.senha, acharUser.senha)
+        console.log(acharUser.email)
         if (!acharUser || !compararSenhas) {
-            console.log(acharUser.senha)
+         
             return res.status(401).send("email ou senha incorretos")
         }else{
            const token = uuid();
-           await db.collection("sessions").insertOne({
+           await db.collection("login").insertOne({
                userId: acharUser._id,
-               token
+               email:acharUser.email,
+               token,
+
                
            })
            const nome = acharUser.nome

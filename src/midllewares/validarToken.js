@@ -10,7 +10,7 @@ async function validarToken(req,res,next){
         return res.status(401).send("não autorizado")
     }
 
-    const session = await db.collection('sessions').findOne({ token });
+    const session = await db.collection('login').findOne({ token });
 
     if (!session) {
         return res.sendStatus(401);
