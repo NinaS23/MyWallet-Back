@@ -20,8 +20,7 @@ app.use(validarToken ,registroRouter)
 
 
 
-const PORT = process.env.PORT || 5006
 
-app.listen(PORT , () =>{
-    console.log(`conectado na porta ${PORT}`)
+app.listen(process.env.PORT , () =>{
+    console.log(`conectado na porta ${process.env.PORT}`)
 })
